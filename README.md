@@ -19,7 +19,6 @@ Here, the DataLoader helps us prevent N+1 queries.
 ```
 
 #### Get fist N posts
-//TODO: Why doesn't server batch `GetUser` requests
 ```shell
 {
     listPosts(limit: 100){

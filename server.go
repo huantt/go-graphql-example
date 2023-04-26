@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/graph-gophers/graphql-go"
 	"github.com/huantt/go-graphql-sample/adapter"
-	config "github.com/huantt/go-graphql-sample/config"
+	"github.com/huantt/go-graphql-sample/config"
 	"github.com/huantt/go-graphql-sample/graphql/resolver"
 	"github.com/huantt/go-graphql-sample/graphql/schema"
 	"github.com/huantt/go-graphql-sample/loader"
+	"github.com/huantt/go-graphql-sample/middleware"
 	"github.com/huantt/go-graphql-sample/pkg/log"
-	"net/http"
 )
 
 func main() {
@@ -28,15 +29,20 @@ func main() {
 	if err != nil {
 		log.Fatalf("creating rootResolver resolver: %schemaString", err)
 	}
-	graphqlSchema := graphql.MustParseSchema(schemaString, rootResolver)
+	graphqlSchema := graphql.MustParseSchema(
+		schemaString,
+		rootResolver,
+		graphql.MaxParallelism(cfg.Graphql.MaxParallelism),
+		graphql.MaxDepth(cfg.Graphql.MaxDepth),
+	)
 	loaders := loader.Init(jsonPlaceholder)
 
-	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", cfg.Port),
-		Handler: newHandler(graphqlSchema, loaders),
-	}
-	log.Infof("Listening on port: %d", cfg.Port)
-	if err = srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	service := gin.Default()
+	service.Use(middleware.AddRequestId)
+	service.Use(middleware.CORS(cfg.AllowedOrigins))
+	service.POST("/graphql", middleware.NewHandler(graphqlSchema, loaders))
+
+	if err := service.Run(fmt.Sprintf("0.0.0.0:%d", cfg.Port)); err != nil {
 		log.Fatal(err)
 	}
 }

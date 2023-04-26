@@ -61,6 +61,7 @@ func NewJsonPlaceHolder() *JsonPlaceHolder {
 }
 
 func (j *JsonPlaceHolder) GetPosts(ctx context.Context, limit int32) ([]model.Post, error) {
+	log.Debugf("GetPosts: %d", limit)
 	var posts []model.Post
 	resp, err := j.httpClient.R().
 		SetQueryParam("limit", fmt.Sprintf("%d", limit)).

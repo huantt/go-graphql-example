@@ -3,6 +3,7 @@ package config
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/huantt/go-graphql-sample/pkg/graphql"
 	"github.com/huantt/go-graphql-sample/pkg/log"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
@@ -11,8 +12,10 @@ import (
 )
 
 type Config struct {
-	Log  log.Config `json:"log" mapstructure:"log"`
-	Port uint16     `json:"port" mapstructure:"port"`
+	Log            log.Config     `json:"log" mapstructure:"log"`
+	Port           uint16         `json:"port" mapstructure:"port"`
+	AllowedOrigins []string       `json:"allowed_origins" mapstructure:"allowed_origins"`
+	Graphql        graphql.Config `json:"graphql" mapstructure:"graphql"`
 }
 
 var cfg *Config
