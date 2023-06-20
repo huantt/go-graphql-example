@@ -5,7 +5,7 @@ Here, the DataLoader helps us prevent N+1 queries.
 
 ## Sample queries
 #### Find posts by ids
-```shell
+```graphql
 {
     findPosts(ids: [1,11,21,31,41]){
         id
@@ -19,7 +19,7 @@ Here, the DataLoader helps us prevent N+1 queries.
 ```
 
 #### Get fist N posts
-```shell
+```graphql
 {
     listPosts(limit: 100){
         id
