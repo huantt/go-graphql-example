@@ -8,6 +8,7 @@ import (
 	"github.com/huantt/go-graphql-sample/config"
 	"github.com/huantt/go-graphql-sample/graphql/resolver"
 	"github.com/huantt/go-graphql-sample/graphql/schema"
+	"github.com/huantt/go-graphql-sample/graphql/tracer"
 	"github.com/huantt/go-graphql-sample/loader"
 	"github.com/huantt/go-graphql-sample/middleware"
 	"github.com/huantt/go-graphql-sample/pkg/log"
@@ -34,6 +35,7 @@ func main() {
 		rootResolver,
 		graphql.MaxParallelism(cfg.Graphql.MaxParallelism),
 		graphql.MaxDepth(cfg.Graphql.MaxDepth),
+		graphql.Tracer(tracer.NewCustomTracer()),
 	)
 	loaders := loader.Init(jsonPlaceholder)
 

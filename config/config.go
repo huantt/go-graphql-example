@@ -30,7 +30,8 @@ func Load() (*Config, error) {
 			Level:  "debug",
 			Format: "text",
 		},
-		Port: 9000,
+		Graphql: graphql.Config{MaxParallelism: 10},
+		Port:    9000,
 	}
 
 	// --- hacking to load reflect structure config into env ----//
