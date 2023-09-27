@@ -1,6 +1,6 @@
 type Post{
     id: Int
-    userId: Int
+    userId: Int64
     title: String
     body: String
     comments: [Comment]

@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
-	"github.com/huantt/go-graphql-sample/loader"
+	"github.com/huantt/go-graphql-sample/graphql/loader"
 )
 
 // GraphQLHandler is a graphql HTTP handler

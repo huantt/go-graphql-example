@@ -2,7 +2,8 @@ package resolver
 
 import (
 	"context"
-	"github.com/huantt/go-graphql-sample/loader"
+	"github.com/huantt/go-graphql-sample/graphql/loader"
+	graphql "github.com/huantt/go-graphql-sample/graphql/scalar"
 	"github.com/huantt/go-graphql-sample/model"
 )
 
@@ -19,8 +20,8 @@ func NewPostResolver(post *model.Post) *PostResolver {
 func (r *PostResolver) Id() *int32 {
 	return &r.post.Id
 }
-func (r *PostResolver) UserId() *int32 {
-	return &r.post.UserId
+func (r *PostResolver) UserId() (*graphql.Int64, error) {
+	return graphql.NewInt64(r.post.UserId)
 }
 
 func (r *PostResolver) Title() *string {

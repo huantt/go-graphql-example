@@ -1,9 +1,9 @@
 # Golang graphql example
-This project uses [graphql-go](github.com/graph-gophers/graphql-go), [dataloader](github.com/graph-gophers/dataloader) to write a sample graphql server in golang.
-
-Here, the DataLoader helps us prevent N+1 queries.
+This project uses [graph-gophers/graphql-go](github.com/graph-gophers/graphql-go), [graph-gophers/dataloader](github.com/graph-gophers/dataloader) to write a sample graphql server in golang.
 
 ## Sample queries
+`POST: /graphql`
+
 #### Find posts by ids
 ```graphql
 {
@@ -21,14 +21,22 @@ Here, the DataLoader helps us prevent N+1 queries.
 #### Get fist N posts
 ```graphql
 {
-    listPosts(limit: 100){
+    listPosts(limit: 2){
         id
         body
         user{
             name
+            address
         }
     }
 }
+```
+
+#### Sample CURL
+```shell
+curl --location 'http://localhost:9000/graphql' \
+--header 'Content-Type: application/json' \
+--data '{"query":"{\n    listPosts(limit: 2){\n        id\n        body\n        user{\n            name\n            address\n        }\n    }\n}"}'
 ```
 
 ## Project structure
