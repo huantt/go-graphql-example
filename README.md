@@ -1,5 +1,5 @@
 # Golang graphql example
-This project uses [graph-gophers/graphql-go](github.com/graph-gophers/graphql-go), [graph-gophers/dataloader](github.com/graph-gophers/dataloader) to write a sample graphql server in golang.
+This project uses [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go), [graph-gophers/dataloader](https://github.com/graph-gophers/dataloader) to write a sample graphql server in golang.
 
 ## Sample queries
 `POST: /graphql`
