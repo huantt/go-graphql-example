@@ -64,6 +64,7 @@ func (j *JsonPlaceHolder) GetPosts(ctx context.Context, limit int32) ([]model.Po
 	log.Debugf("GetPosts: %d", limit)
 	var posts []model.Post
 	resp, err := j.httpClient.R().
+		SetContext(ctx).
 		SetQueryParam("limit", fmt.Sprintf("%d", limit)).
 		SetResult(&posts).
 		Get("/posts")
@@ -79,7 +80,9 @@ func (j *JsonPlaceHolder) GetPosts(ctx context.Context, limit int32) ([]model.Po
 func (j *JsonPlaceHolder) FindUsers(ctx context.Context, ids []int32) ([]model.User, error) {
 	log.Debugf("FindUsers: %v", ids)
 	var users []model.User
-	request := j.httpClient.R().SetResult(&users)
+	request := j.httpClient.R().
+		SetContext(ctx).
+		SetResult(&users)
 	stringIds := make([]string, 0, len(ids))
 	for _, id := range ids {
 		stringIds = append(stringIds, fmt.Sprintf("%d", id))
